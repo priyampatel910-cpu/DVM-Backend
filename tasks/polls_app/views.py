@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -16,19 +16,21 @@ def details(request, question_id):
 
     if request.method == "POST":
         choice_id = request.POST.get("choice")
-        choice = get_object_or_404(question.choice_set, id=choice_id)
+        choice = get_object_or_404(question.choices, id=choice_id)
         choice.votes += 1
         choice.save()
         return redirect("polls:results", question_id=question.id)
 
     return render(request, "details.html", {
-        "question": question
+        "question": question,
+        "choices": question.choices.all()
     })
 
 def results(request, question_id):
 
     question = get_object_or_404(Question, id=question_id)
 
-    return render(request, "results.html", {
-        "question": question
+    return render(request, "result.html", {
+        "question": question,
+        "choices": question.choices.all()
     })
