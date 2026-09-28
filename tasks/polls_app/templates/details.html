@@ -3,4 +3,8 @@
 {% block body %}
     <h1>Question {{question.id}} </h1>
     <p>{{ question }}</p>
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+    <input type="submit" value="Vote">
+    </form>
 {% endblock %}
