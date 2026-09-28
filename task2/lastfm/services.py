@@ -4,15 +4,15 @@ from django.conf import settings
 
 BASE_URL = "http://audioscrobbler.com"
 
-def call_lastfm_api(method, parameters=None):
-    if parameters is None:
-        parameters = {}
+def call_lastfm_api(method, params=None):
+    if params is None:
+        params = {}
         
-    default_parameters = {"method": method, "api_key": settings.LASTFM_API_KEY, "format": "json"}
-    parameters.update(default_parameters)
+    default_params = {"method": method, "api_key": settings.LASTFM_API_KEY, "format": "json"}
+    params.update(default_params)
     
     try:
-        response = requests.get(BASE_URL, parameters=parameters)
+        response = requests.get(BASE_URL, params=params)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

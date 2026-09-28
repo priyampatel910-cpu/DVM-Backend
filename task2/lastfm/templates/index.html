@@ -1,0 +1,43 @@
+<html>
+
+<body>
+    <h1>Lastfm Data Explorer</h1>
+
+    <h2>Top Artists or Tracks by Country</h2>
+    <form action="/" method="GET">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" value="{{ current_country }}"><br><br>
+
+        <label for="geo-type">Type:</label>
+        <select id="geo-type" name="type">
+            <option value="artists" {% if current_type == 'artists' %}selected{% endif %}>Artists</option>
+            <option value="tracks" {% if current_type == 'tracks' %}selected{% endif %}>Tracks</option>
+        </select><br><br>
+
+        <button type="submit">Get Geo Top List</button>
+    </form>
+
+    <hr>
+
+    <h2>Search Music</h2>
+    <form action="/" method="GET">
+        <label for="q">Query:</label>
+        <input type="text" id="q" name="q" placeholder="Enter artist, album, or track" value="{{ current_query }}"><br><br>
+
+        <label for="search-type">Type:</label>
+        <select id="search-type" name="search_type">
+            <option value="artist" {% if current_search_type == 'artist' %}selected{% endif %}>Artist</option>
+            <option value="album" {% if current_search_type == 'album' %}selected{% endif %}>Album</option>
+            <option value="track" {% if current_search_type == 'track' %}selected{% endif %}>Track</option>
+        </select><br><br>
+
+        <button type="submit">Search</button>
+    </form>
+
+    {% if raw_json %}
+        <hr>
+        <h2>API JSON Response:</h2>
+        <pre>{{ raw_json }}</pre>
+    {% endif %}
+</body>
+</html>
