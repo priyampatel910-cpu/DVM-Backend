@@ -34,3 +34,25 @@ def results(request, question_id):
         "question": question,
         "choices": question.choices.all()
     })
+
+
+# This is the view ofthe new feature, which is adding a feature for user to add a poll of their own to the list
+
+def add_poll(request):
+    if request.method == "POST":
+        question_text = request.POST.get("question")
+        choice1 = request.POST.get("choice1")
+        choice2 = request.POST.get("choice2")
+        choice3 = request.POST.get("choice3")
+
+        question = Question.objects.create(question_text=question_text)
+
+        question.choices.create(choice_text=choice1)
+
+        question.choices.create(choice_text=choice2)
+
+        question.choices.create(choice_text=choice3)
+
+        return redirect("polls:index")
+
+    return render(request,"add_poll.html")

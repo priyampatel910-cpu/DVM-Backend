@@ -1,0 +1,35 @@
+{%extends 'layout.html'%}
+
+{% block body %}
+    <h1>Create a Poll</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Question:</label>
+
+        <br>
+        <input type="text" name="question" required>
+
+        <br>
+        <label>Choice 1:</label>
+
+        <br>
+        <input type="text" name="choice1" required>
+
+        <br>
+        <label>Choice 2:</label>
+
+        <br>
+        <input type="text" name="choice2" required>
+
+        <br>
+        <label>Choice 3:</label>
+
+        <br>
+        <input type="text" name="choice3" required>
+
+        <br>
+        <button type="submit">Create Poll</button>
+    </form>
+    <br>
+    <a href="{% url 'polls:index' %}">Back to Polls</a>
+{% endblock %}
