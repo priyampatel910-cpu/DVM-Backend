@@ -1,10 +1,18 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1>Question {{question.id}} </h1>
-    <p>{{ question }}</p>
-    <form action="{% url 'polls:vote' question.id %}" method="post">
-        {% csrf_token %}
-    <input type="submit" value="Vote">
-    </form>
+    <h1>{{ question.question_text }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+                
+                <input type="radio" name="choice" value="{{ choice.id }}">
+                {{ choice.choice_text }}
+                <br>
+            {% endfor %}
+            <br>
+            <button type="submit">Vote</button>
+        </form>
+        <br>
+        <a href="{% url 'polls:results' question.id %}">View Results</a>
 {% endblock %}

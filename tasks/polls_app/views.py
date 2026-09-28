@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -10,25 +10,25 @@ def index(request):
         "questions": questions
     })
 
+
 def details(request, question_id):
-    question = Question.objects.get(id = question_id)
-    return render(request, "details.html",{
+    question = get_object_or_404(Question, id=question_id)
+
+    if request.method == "POST":
+        choice_id = request.POST.get("choice")
+        choice = get_object_or_404(question.choice_set, id=choice_id)
+        choice.votes += 1
+        choice.save()
+        return redirect("polls:results", question_id=question.id)
+
+    return render(request, "details.html", {
         "question": question
     })
 
-def vote(request, question_id):
-    question = Question.objects.get(pk = question_id)
-    try:
-        selected_choice = question.choices.get(pk = request.POST["choice"])
+def results(request, question_id):
 
-    except(KeyError, Choice.DoesNotExist):
-        return render(request, "details.html", {
-            "question": question,
-            "error_message": "You did not select a vaild response",
-        })
+    question = get_object_or_404(Question, id=question_id)
 
-    else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
-
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id)))
+    return render(request, "results.html", {
+        "question": question
+    })

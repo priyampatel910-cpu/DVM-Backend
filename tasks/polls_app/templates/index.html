@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1>Questions</h1>
-    <ul>
+ 
+<h1>Available Polls</h1>
+    {% if questions %}
+        <ul>
         {% for question in questions %}
-            <li><a href="{% url 'details' question.id %}">{{question}}</a></li>
-        {% empty %}
-            <li>No questions</li>
+            <li><a href="{% url 'polls:details' question.id %}">{{ question.question_text }}</a></li>
         {% endfor %}
-    </ul>
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
 {% endblock %}
