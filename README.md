@@ -11,5 +11,11 @@
 > ### The New Feature: Letting users create a new poll
 > > This feature lets a user create his/her own poll on the web interface without having to access /admin
 > > I have hardcoded the choices section in the adding polls form, as otherwise, the computer won't be able to process different number of choices in every polls
-> 
-> 
+
+
+## Task 2: Top Music app with lastFM API
+
+> There might be some bugs in it, which I might resolve later, as I started to learn and code this just 4 hours before.
+> Could not add a new feature to it due to time constraint :(
+
+
